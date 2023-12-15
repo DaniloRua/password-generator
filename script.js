@@ -88,27 +88,50 @@ var upperCasedCharacters = [
   'Z'
 ];
 
+
 // Function to prompt user for password options
 let passwordLenght = '';
 let includeSpecialChars = '';
 let includeNumericChars = '';
 let includeUpperCasedChars = '';
-let includeLowerCasedChars = '';
 
 function getPasswordOptions() {
 
   passwordLenght = prompt("The password length must be provided as a number, between 8 and 128.")
-  
+
   while (passwordLenght < 8 || passwordLenght > 128 || passwordLenght == NaN) {
-   passwordLenght = prompt("The password length must be provided as a number, between 8 and 128.")
+    passwordLenght = prompt("The password length must be provided as a number, between 8 and 128.")
   }
   includeSpecialChars = confirm("Press confirm to include special characters.")
   includeNumericChars = confirm("Press confirm to include numeric characters")
   includeUpperCasedChars = confirm("Press confirm to include Uppercase characters")
-  includeLowerCasedChars = confirm("Press confirm to include lowercase characters")
-  console.log(passwordLenght)
 
+  //concatenation of arrays
+  var arraysConcat = '';
+
+  if (includeSpecialChars == true) {
+    arraysConcat = lowerCasedCharacters.concat(specialCharacters)
+    if (includeNumericChars == true) {
+      arraysConcat = arraysConcat.concat(numericCharacters)
+      if (includeUpperCasedChars == true) {
+        arraysConcat = arraysConcat.concat(upperCasedCharacters)
+      }
+    }
+  } else if (includeNumericChars == true) {
+    arraysConcat = lowerCasedCharacters.concat(numericCharacters)
+    if (includeUpperCasedChars == true) {
+      arraysConcat = arraysConcat.concat(upperCasedCharacters)
+    }
+  }
+   else if ( includeUpperCasedChars == true){
+    arraysConcat = lowerCasedCharacters.concat(upperCasedCharacters)
+   }
+  else{
+    arraysConcat = lowerCasedCharacters
+  }
 }
+
+
 
 // Function for getting a random element from an array
 function getRandom(arr) {
