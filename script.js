@@ -90,10 +90,10 @@ var upperCasedCharacters = [
 
 
 // Function to prompt user for password options
-let passwordLenght = '';
-let includeSpecialChars = '';
-let includeNumericChars = '';
-let includeUpperCasedChars = '';
+var passwordLenght = '';
+var includeSpecialChars = '';
+var includeNumericChars = '';
+var includeUpperCasedChars = '';
 
 function getPasswordOptions() {
 
@@ -123,24 +123,27 @@ function getPasswordOptions() {
       arraysConcat = arraysConcat.concat(upperCasedCharacters)
     }
   }
-   else if ( includeUpperCasedChars == true){
+  else if (includeUpperCasedChars == true) {
     arraysConcat = lowerCasedCharacters.concat(upperCasedCharacters)
-   }
-  else{
-    arraysConcat = lowerCasedCharacters
   }
+  else {
+    arraysConcat = lowerCasedCharacters;
+  }
+
+  return arraysConcat
 }
-
-
 
 // Function for getting a random element from an array
+
 function getRandom(arr) {
-
-
+  var random = Math.floor(Math.random() * arr.length);
+  return random;
 }
+
 
 // Function to generate password with user input
 function generatePassword() {
+  
 
 }
 
@@ -149,8 +152,9 @@ var generateBtn = document.querySelector('#generate');
 
 // Write password to the #password input
 function writePassword() {
-  getPasswordOptions()
-  var password = generatePassword();
+
+  var finalArray = getPasswordOptions()
+  var password = generatePassword(finalArray);
   var passwordText = document.querySelector('#password');
 
   passwordText.value = password;
