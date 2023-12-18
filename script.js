@@ -93,6 +93,7 @@ let passwordLength = '';
 let includeSpecialChars = '';
 let includeNumericChars = '';
 let includeUpperCasedChars = '';
+let includeLoweCaseChars = '';
 
 function getPasswordOptions() {
 
@@ -100,54 +101,53 @@ function getPasswordOptions() {
   while (passwordLength < 8 || passwordLength > 128 || passwordLength == NaN) {
     passwordLength = prompt("The password length must be provided as a number, between 8 and 128.");
   }
+  includeLoweCaseChars = confirm("Press confirm to include lowercase characters")
+  includeUpperCasedChars = confirm("Press confirm to include Uppercase characters");
   includeSpecialChars = confirm("Press confirm to include special characters.");
   includeNumericChars = confirm("Press confirm to include numeric characters");
-  includeUpperCasedChars = confirm("Press confirm to include Uppercase characters");
 
   //concatenation of arrays
   var arraysConcat = '';
 
-  if (includeSpecialChars == true) {
-    arraysConcat = lowerCasedCharacters.concat(specialCharacters)
-    if (includeNumericChars == true) {
-      arraysConcat = arraysConcat.concat(numericCharacters)
-      if (includeUpperCasedChars == true) {
-        arraysConcat = arraysConcat.concat(upperCasedCharacters)
-      }
-    }
-  } else if (includeNumericChars == true) {
-    arraysConcat = lowerCasedCharacters.concat(numericCharacters)
+  if (includeLoweCaseChars == true) {
+    arraysConcat = lowerCasedCharacters;
     if (includeUpperCasedChars == true) {
       arraysConcat = arraysConcat.concat(upperCasedCharacters)
+    } if (includeSpecialChars == true) {
+      arraysConcat = arraysConcat.concat(specialCharacters)
+    } if (includeNumericChars == true) {
+      arraysConcat = arraysConcat.concat(numericCharacters)
     }
-  }
-  else if (includeUpperCasedChars == true) {
-    arraysConcat = lowerCasedCharacters.concat(upperCasedCharacters)
-  }
-  else {
-    arraysConcat = lowerCasedCharacters;
+  } else if (includeUpperCasedChars == true) {
+    arraysConcat = upperCasedCharacters;
+    if (includeSpecialChars == true) {
+      arraysConcat = arraysConcat.concat(specialCharacters)
+    } if (includeNumericChars == true) {
+      arraysConcat = arraysConcat.concat(numericCharacters)
+    }
+  } else if (includeSpecialChars == true) {
+    arraysConcat = specialCharacters;
+    if (includeNumericChars == true) {
+      arraysConcat = arraysConcat.concat(numericCharacters)
+    }
+  } else if (includeNumericChars == true) {
+    arraysConcat = numericCharacters
   }
   return arraysConcat
 }
-
 // Function for getting a random element from an array
-
 function getRandom(arr) {
   var random = Math.floor(Math.random() * arr.length);
   return random;
 }
-
 // Function to generate password with user input
 function generatePassword(arr) {
-
-  var password = ''
+  var password = '';
   for (let i = 0; i < passwordLength; i++) {
     password += arr[getRandom(arr)]
-
   }
   return password
 }
-
 // Get references to the #generate element
 var generateBtn = document.querySelector('#generate');
 
@@ -158,8 +158,6 @@ function writePassword() {
   var password = generatePassword(finalArray);
   var passwordText = document.querySelector('#password');
   passwordText.value = password;
-
 }
-
 // Add event listener to generate button
 generateBtn.addEventListener('click', writePassword);
